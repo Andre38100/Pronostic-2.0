@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pronostic 2.0 — Démo</title>
+<style>
+:root{color-scheme:dark;--bg:#050b19;--panel:#0c1830;--line:#18365b;--blue:#168cff;--cyan:#24e2ff;--gold:#ffd56a;--muted:#9cb2d2}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#102a58 0,#050b19 55%);color:#f5f8ff;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
+header{padding:22px 18px 18px;border-bottom:1px solid #18365b;background:#071124}
+.brand{font-weight:900;font-size:24px;letter-spacing:.4px}.brand span{color:var(--cyan)}.tag{color:var(--muted);font-size:12px;margin-top:4px}
+.wrap{max-width:760px;margin:auto;padding:16px 14px 88px}.hero{padding:18px;border:1px solid #18538b;border-radius:18px;background:linear-gradient(125deg,#102b56,#09152b 75%);box-shadow:0 0 28px #008cff17}
+.eyebrow{font-size:11px;color:var(--cyan);font-weight:800;letter-spacing:1.4px}.hero h1{font-size:25px;line-height:1.15;margin:8px 0}.hero p{color:#bfd0e8;font-size:13px;margin:8px 0 14px}
+button{font:inherit;cursor:pointer;border:0}.primary{background:linear-gradient(90deg,#087cff,#19c9ff);color:#041023;font-weight:800;border-radius:12px;padding:12px 15px}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:22px 2px 10px}.section-title h2{font-size:17px;margin:0}.pill{font-size:11px;color:var(--cyan);border:1px solid #17618c;border-radius:99px;padding:5px 9px}
+.filters{display:flex;gap:8px;overflow:auto;padding-bottom:4px}.filter{white-space:nowrap;background:#0b1730;color:#b5c6e2;border:1px solid var(--line);border-radius:99px;padding:8px 12px;font-size:12px}.filter.active{background:#0b69c7;color:white;border-color:#1aa8ff}
+.card{background:linear-gradient(140deg,#0e1b34,#081226);border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0}
+.league{font-size:11px;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:12px}.teams{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;text-align:center;gap:8px}.team{font-size:13px;font-weight:750}.crest{display:block;font-size:25px;margin-bottom:5px}.vs{font-size:11px;color:var(--muted)}
+.pred{border-top:1px solid #183052;margin-top:13px;padding-top:12px}.pred-head{display:flex;justify-content:space-between;font-size:12px;margin-bottom:8px}.confidence{color:#74f4bd;font-weight:800}.bar{height:7px;border-radius:9px;background:#182b49;overflow:hidden}.bar i{display:block;height:100%;width:68%;background:linear-gradient(90deg,#0789ff,#21e2ff);border-radius:9px}.note{font-size:11px;color:var(--muted);line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat{background:#0c1830;border:1px solid var(--line);border-radius:14px;padding:13px}.stat b{display:block;font-size:19px;color:var(--cyan)}.stat span{font-size:11px;color:var(--muted)}
+.vip{border:1px solid #a98638;background:linear-gradient(145deg,#28213a,#10172b);border-radius:16px;padding:17px;margin-top:18px}.vip h2{font-size:18px;margin:6px 0}.price{font-size:27px;font-weight:900;color:var(--gold);margin:10px 0}.vip ul{padding-left:18px;color:#d7e1f3;font-size:12px;line-height:1.9}
+footer{position:fixed;bottom:0;left:0;right:0;background:#071124f5;border-top:1px solid #18365b;display:flex;justify-content:center;gap:6px;padding:9px 6px calc(9px + env(safe-area-inset-bottom));backdrop-filter:blur(12px)}
+.nav{flex:1;max-width:130px;background:transparent;color:#9cb2d2;font-size:10px;padding:5px 2px;border-radius:9px}.nav strong{display:block;font-size:17px;margin-bottom:2px}.nav.active{color:var(--cyan);background:#10284a}
+.toast{position:fixed;left:14px;right:14px;bottom:78px;background:#15355b;border:1px solid #2189d7;border-radius:12px;padding:12px;font-size:13px;display:none;z-index:3}
+@media(min-width:620px){.hero h1{font-size:32px}.grid{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<header><div class="brand">⚽ PRONOSTIC <span>2.0</span></div><div class="tag">L’INTELLIGENCE ARTIFICIELLE AU SERVICE DE VOS ANALYSES</div></header>
+<main class="wrap">
+<section class="hero"><div class="eyebrow">● DÉMO INTERACTIVE</div><h1>Analyse les matchs.<br><span style="color:var(--cyan)">Comprends les probabilités.</span></h1><p>Une interface pensée pour suivre les grands championnats européens, comparer les tendances et consulter les analyses.</p><button class="primary" onclick="showToast('La démonstration utilise des données fictives. Les analyses réelles nécessiteront une source de données sportives et un modèle validé.')">Explorer la démo IA ↗</button></section>
+<div class="section-title"><h2>Matchs à l’affiche</h2><span class="pill">5 championnats</span></div>
+<div class="filters" id="filters"><button class="filter active" data-league="Tous">Tous</button><button class="filter" data-league="Premier League">Premier League</button><button class="filter" data-league="Ligue 1">Ligue 1</button><button class="filter" data-league="Liga">Liga</button><button class="filter" data-league="Serie A">Serie A</button><button class="filter" data-league="Bundesliga">Bundesliga</button></div>
+<div id="matches"></div>
+<div class="section-title"><h2>Tableau de bord</h2><span class="pill">Exemple</span></div>
+<div class="grid"><div class="stat"><b>1N2</b><span>Résultat du match</span></div><div class="stat"><b>+ / − 2,5</b><span>Total de buts</span></div><div class="stat"><b>BTTS</b><span>Les deux équipes marquent</span></div><div class="stat"><b>Historique</b><span>Suivi des résultats</span></div></div>
+<section class="vip"><div class="eyebrow" style="color:var(--gold)">♛ ESPACE VIP</div><h2>Accès premium</h2><div class="price">20 € <small style="font-size:13px;color:#e8d8a9">/ mois</small></div><ul><li>Analyses détaillées et probabilités</li><li>Accès aux pronostics premium</li><li>Historique des pronostics et performances</li></ul><button class="primary" onclick="showToast('Paiement désactivé dans cette maquette. Il faudra configurer un prestataire de paiement avant le lancement.')">Découvrir l’offre VIP</button></section>
+<p class="note" style="margin-top:18px">Maquette de démonstration : équipes, pourcentages et analyses illustratifs, non actualisés et non issus d’une IA connectée. Aucun pronostic ne garantit un gain. Jouez de manière responsable.</p>
+</main>
+<div id="toast" class="toast"></div>
+<footer><button class="nav active" data-tab="Accueil"><strong>⌂</strong>Accueil</button><button class="nav" data-tab="Pronostics"><strong>◎</strong>Pronostics</button><button class="nav" data-tab="VIP"><strong>♛</strong>VIP</button><button class="nav" data-tab="Historique"><strong>▤</strong>Historique</button></footer>
+<script>
+const data=[
+{league:"Premier League",time:"Exemple · 18:30",home:"Man City",away:"Arsenal",h:"🔵",a:"🔴",pick:"Victoire Man City",prob:54,goals:"Plus de 2,5 buts"},
+{league:"Ligue 1",time:"Exemple · 21:00",home:"PSG",away:"Marseille",h:"🔵",a:"⚪",pick:"Plus de 2,5 buts",prob:61,goals:"Les deux équipes marquent : oui"},
+{league:"Liga",time:"Exemple · 20:00",home:"Real Madrid",away:"Barcelona",h:"⚪",a:"🔴",pick:"Les deux équipes marquent : oui",prob:58,goals:"Plus de 2,5 buts"},
+{league:"Serie A",time:"Exemple · 19:45",home:"Inter",away:"Juventus",h:"🔵",a:"⚫",pick:"Moins de 3,5 buts",prob:66,goals:"Match potentiellement serré"},
+{league:"Bundesliga",time:"Exemple · 17:30",home:"Bayern",away:"Dortmund",h:"🔴",a:"🟡",pick:"Plus de 2,5 buts",prob:63,goals:"Les deux équipes marquent : oui"}];
+function render(league="Tous"){document.getElementById("matches").innerHTML=data.filter(x=>league==="Tous"||x.league===league).map(x=>`<article class="card"><div class="league"><span>${x.league}</span><span>${x.time}</span></div><div class="teams"><div class="team"><span class="crest">${x.h}</span>${x.home}</div><div class="vs">VS</div><div class="team"><span class="crest">${x.a}</span>${x.away}</div></div><div class="pred"><div class="pred-head"><span>Analyse illustrative · ${x.pick}</span><span class="confidence">${x.prob}%</span></div><div class="bar"><i style="width:${x.prob}%"></i></div><p class="note">${x.goals}. Estimation fictive pour présenter l’interface, pas un conseil de pari.</p><button class="filter" onclick="showToast('La fiche détaillée sera disponible quand les données de matchs et le moteur d’analyse seront connectés.')">Voir l’analyse →</button></div></article>`).join("")}
+document.querySelectorAll(".filter[data-league]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".filter[data-league]").forEach(x=>x.classList.remove("active"));b.classList.add("active");render(b.dataset.league)}));
+document.querySelectorAll(".nav").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".nav").forEach(x=>x.classList.remove("active"));b.classList.add("active");if(b.dataset.tab!=="Accueil")showToast(`${b.dataset.tab} : section de démonstration. Les fonctions complètes seront ajoutées progressivement.`)}));
+function showToast(t){const el=document.getElementById("toast");el.textContent=t;el.style.display="block";clearTimeout(window.tt);window.tt=setTimeout(()=>el.style.display="none",4200)}
+render();
+</script>
+</body></html>
